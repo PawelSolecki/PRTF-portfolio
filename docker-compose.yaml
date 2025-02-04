@@ -1,0 +1,6 @@
+services:
+  portfolio-db:
+    image: "postgres"
+    container_name: portfolio-db
+    ports:
+      - "5432:5432"
