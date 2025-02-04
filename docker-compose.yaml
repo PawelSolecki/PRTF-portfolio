@@ -1,6 +1,16 @@
 services:
   portfolio-db:
-    image: "postgres"
+    image: "postgres:16"
     container_name: portfolio-db
     ports:
       - "5432:5432"
+    environment:
+      POSTGRES_DB: portfolios
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - db-portfolios-data:/var/lib/postgresql/data
+
+volumes:
+  db-portfolios-data:
+    driver: local
