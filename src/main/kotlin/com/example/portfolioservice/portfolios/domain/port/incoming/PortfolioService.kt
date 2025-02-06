@@ -9,9 +9,9 @@ interface PortfolioService {
 
     fun createPortfolio(portfolio: AddPortfolioDTO)
 
-    fun getPortfolioById(id: String): Portfolio
+    fun getPortfolioById(id: UUID): Portfolio
 
-    fun getPortfoliosByOwnerId(ownerId: String): List<Portfolio>
+    fun getPortfoliosByOwnerId(ownerId: UUID): List<Portfolio>
 
     fun updatePortfolio(portfolio: PatchPortfolioDTO)
 

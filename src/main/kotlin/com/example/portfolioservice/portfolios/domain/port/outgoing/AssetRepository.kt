@@ -6,7 +6,7 @@ import java.util.*
 interface AssetRepository {
     fun save(asset: Asset)
 
-    fun getAssetById(id: String): Asset
+    fun getAssetById(id: UUID): Asset
 
     fun getAssetsByPortfolioId(portfolioId: UUID): List<Asset>
 
