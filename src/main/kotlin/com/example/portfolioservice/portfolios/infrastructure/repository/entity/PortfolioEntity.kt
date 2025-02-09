@@ -1,5 +1,6 @@
 package com.example.portfolioservice.portfolios.infrastructure.repository.entity
 
+import com.example.portfolioservice.portfolios.domain.model.Portfolio
 import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
@@ -9,28 +10,41 @@ import java.util.*
 
 @Entity
 @Table(name = "portfolios")
-class PortfolioEntity(
+class PortfolioEntity @JvmOverloads constructor(
     @Id
-    @GeneratedValue
-    val id: UUID = UUID.randomUUID(),
+    @GeneratedValue(strategy = GenerationType.UUID)
+    val id: UUID? = null,
 
     @Column(nullable = false)
-    val ownerId: UUID,
+    val ownerId: UUID? = null,
 
     @Column(nullable = false)
-    val name: String,
+    val name: String = "",
 
     @OneToMany(mappedBy = "portfolio", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
     val assets: MutableList<AssetEntity> = mutableListOf(),
 
     @Column(nullable = false, updatable = false)
     @CreationTimestamp
-    val createdAt: LocalDateTime = LocalDateTime.now(),
+    val createdAt: LocalDateTime? = LocalDateTime.now(),
 
     @Column(nullable = false)
     @UpdateTimestamp
-    var updatedAt: LocalDateTime = LocalDateTime.now(),
+    var updatedAt: LocalDateTime? = LocalDateTime.now(),
 
     @Column(nullable = false, precision = 19, scale = 4)
     var totalValue: BigDecimal = BigDecimal.ZERO
-)
+){
+
+    fun toDomain(): Portfolio{
+        return Portfolio(
+            id = id,
+            ownerId = ownerId,
+            name = name,
+            assets = assets.map { it.toDomain() },
+            createdAt = createdAt,
+            updatedAt = updatedAt,
+            totalValue = totalValue
+        )
+    }
+}

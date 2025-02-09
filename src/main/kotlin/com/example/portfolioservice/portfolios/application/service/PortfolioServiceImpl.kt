@@ -2,7 +2,6 @@ package com.example.portfolioservice.portfolios.application.service
 
 import com.example.portfolioservice.portfolios.application.dto.portfolio.AddPortfolioDTO
 import com.example.portfolioservice.portfolios.application.dto.portfolio.PatchPortfolioDTO
-import com.example.portfolioservice.portfolios.application.mapper.PortfolioMapper
 import com.example.portfolioservice.portfolios.domain.model.Portfolio
 import com.example.portfolioservice.portfolios.domain.port.incoming.PortfolioService
 import com.example.portfolioservice.portfolios.domain.port.outgoing.PortfolioRepository
@@ -12,12 +11,10 @@ import java.util.*
 @Service
 class PortfolioServiceImpl(
     val portfolioRepository: PortfolioRepository,
-    val portfolioMapper: PortfolioMapper
 ): PortfolioService {
 
     override fun createPortfolio(portfolio: AddPortfolioDTO) {
-        val portfolioDomain = portfolioMapper.toDomain(portfolio).copy(ownerId = UUID.randomUUID())
-        portfolioRepository.save(portfolioDomain)
+        portfolioRepository.save(portfolio.toDomain(UUID.randomUUID()))
     }
 
     override fun getPortfolioById(id: UUID): Portfolio {
@@ -29,7 +26,7 @@ class PortfolioServiceImpl(
     }
 
     override fun updatePortfolio(portfolio: PatchPortfolioDTO) {
-        portfolioRepository.update(portfolioMapper.toDomain(portfolio))
+        TODO("Not yet implemented")
     }
 
     override fun deletePortfolio(id: UUID) {

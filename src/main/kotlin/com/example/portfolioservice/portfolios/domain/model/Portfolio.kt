@@ -5,12 +5,12 @@ import java.time.LocalDateTime
 import java.util.*
 
 data class Portfolio(
-    val id: UUID,
-    val ownerId: UUID,
+    val id: UUID? = null,
+    val ownerId: UUID? = null,
     val name: String,
-    val assets: List<Asset>,
-    val createdAt: LocalDateTime,
-    val updatedAt: LocalDateTime,
-    val totalValue: BigDecimal
+    val assets: List<Asset> = listOf(),
+    val createdAt: LocalDateTime? = null,
+    val updatedAt: LocalDateTime? = null,
+    val totalValue: BigDecimal = BigDecimal.ZERO
 
 )

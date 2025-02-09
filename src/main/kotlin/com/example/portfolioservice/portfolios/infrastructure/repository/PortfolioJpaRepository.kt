@@ -5,4 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
 interface PortfolioJpaRepository : JpaRepository<PortfolioEntity, UUID> {
+    fun findByOwnerId(ownerId: UUID): List<PortfolioEntity>
+
 }
