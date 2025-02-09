@@ -6,10 +6,9 @@ import java.util.*
 
 class PortfolioJpaRepositoryAdapter(
     private val portfolioJpaRepository: PortfolioJpaRepository,
-//    private val mapper: EntitiesMapper
 ) : PortfolioRepository{
     override fun save(portfolio: Portfolio) {
-//        portfolioJpaRepository.save(mapper.toEntity(portfolio))
+        portfolioJpaRepository.save(portfolio.toEntity())
     }
 
     override fun getPortfolioById(id: UUID): Portfolio {

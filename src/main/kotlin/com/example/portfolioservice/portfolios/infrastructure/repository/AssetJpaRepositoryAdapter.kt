@@ -2,27 +2,26 @@ package com.example.portfolioservice.portfolios.infrastructure.repository
 
 import com.example.portfolioservice.portfolios.domain.model.Asset
 import com.example.portfolioservice.portfolios.domain.port.outgoing.AssetRepository
-import com.example.portfolioservice.portfolios.infrastructure.repository.mapper.EntitiesMapper
 import java.util.*
 
 class AssetJpaRepositoryAdapter(
     private val assetJpaRepository: AssetJpaRepository,
-    private val mapper: EntitiesMapper
 ) : AssetRepository {
     override fun save(asset: Asset) {
-        assetJpaRepository.save(mapper.toEntity(asset))
+        assetJpaRepository.save(asset.toEntity())
     }
 
     override fun getAssetById(id: UUID): Asset {
-        return mapper.toDomain(assetJpaRepository.findById(id).get())
+        return assetJpaRepository.findById(id).get().toDomain()
+
     }
 
     override fun getAssetsByPortfolioId(portfolioId: UUID): List<Asset> {
-        return assetJpaRepository.findAll().map { mapper.toDomain(it) }
+        return assetJpaRepository.findByPortfolioId(portfolioId).map { it.toDomain() }
     }
 
     override fun update(asset: Asset) {
-        assetJpaRepository.save(mapper.toEntity(asset))
+        assetJpaRepository.save(asset.toEntity())
     }
 
     override fun deleteAsset(id: UUID) {

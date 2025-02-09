@@ -10,19 +10,19 @@ class TransactionJpaRepositoryAdapter(
     private val mapper: EntitiesMapper
 ) : TransactionRepository {
     override fun save(transaction: Transaction) {
-        transactionJpaRepository.save(mapper.toEntity(transaction))
+        transactionJpaRepository.save(transaction.toEntity())
     }
 
     override fun getTransactionById(id: UUID): Transaction {
-        return mapper.toDomain(transactionJpaRepository.findById(id).get())
+        return transactionJpaRepository.findById(id).get().toDomain()
     }
 
     override fun getTransactionsByAssetId(assetId: UUID): List<Transaction> {
-        return transactionJpaRepository.findAll().map { mapper.toDomain(it) }
+        return transactionJpaRepository.findByAssetId(assetId).map { it.toDomain() }
     }
 
     override fun update(transaction: Transaction) {
-        transactionJpaRepository.save(mapper.toEntity(transaction))
+        transactionJpaRepository.save(transaction.toEntity())
     }
 
     override fun delete(id: UUID) {

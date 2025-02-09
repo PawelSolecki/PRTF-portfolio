@@ -41,7 +41,7 @@ class PortfolioEntity @JvmOverloads constructor(
             id = id,
             ownerId = ownerId,
             name = name,
-            assets = assets.map { it.toDomain() },
+            assets = assets.map { it.toDomain() }.toMutableList(),
             createdAt = createdAt,
             updatedAt = updatedAt,
             totalValue = totalValue

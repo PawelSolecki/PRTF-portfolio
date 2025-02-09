@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository
 import java.util.*
 
 interface TransactionJpaRepository : JpaRepository<TransactionEntity, UUID> {
+    fun findByAssetId(assetId: UUID): List<TransactionEntity>
 }
