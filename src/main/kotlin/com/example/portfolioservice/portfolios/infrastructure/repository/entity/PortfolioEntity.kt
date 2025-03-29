@@ -24,6 +24,9 @@ class PortfolioEntity @JvmOverloads constructor(
     @OneToMany(mappedBy = "portfolio", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
     val assets: MutableList<AssetEntity> = mutableListOf(),
 
+    @OneToMany(mappedBy = "portfolio", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+    val allocations: MutableList<PortfolioAllocationEntity> = mutableListOf(),
+
     @Column(nullable = false, updatable = false)
     @CreationTimestamp
     val createdAt: LocalDateTime? = LocalDateTime.now(),
@@ -42,6 +45,7 @@ class PortfolioEntity @JvmOverloads constructor(
             ownerId = ownerId,
             name = name,
             assets = assets.map { it.toDomain() }.toMutableList(),
+            allocations = allocations.map { it.toDomain() }.toMutableList(),
             createdAt = createdAt,
             updatedAt = updatedAt,
             totalValue = totalValue

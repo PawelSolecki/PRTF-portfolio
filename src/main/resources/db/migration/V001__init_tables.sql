@@ -31,3 +31,12 @@ CREATE TABLE transactions
     date           TIMESTAMP(6)   NOT NULL,
     CONSTRAINT fk_transactions_asset FOREIGN KEY (asset_id) REFERENCES assets (id) ON DELETE CASCADE
 );
+
+CREATE TABLE portfolio_allocations
+(
+    id            UUID PRIMARY KEY,
+    portfolio_id  UUID           NOT NULL,
+    asset_type    VARCHAR(20)    NOT NULL CHECK (asset_type IN ('STOCK', 'BOND', 'COMMODITY', 'CRYPTO', 'ETF', 'MUTUAL_FUND')),
+    percentage    NUMERIC(19, 4) NOT NULL,
+    CONSTRAINT fk_portfolio_allocations_portfolio FOREIGN KEY (portfolio_id) REFERENCES portfolios (id) ON DELETE CASCADE
+)

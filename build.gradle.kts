@@ -36,7 +36,7 @@ dependencies {
     api("org.jetbrains.kotlin:kotlin-reflect:1.9.22")
 
     // Baza danych
-    api("org.postgresql:postgresql:42.7.1")
+    api("org.postgresql:postgresql:42.7.2")
     api("org.flywaydb:flyway-core:9.22.3")
 
     // MapStruct
@@ -46,9 +46,15 @@ dependencies {
     // Testy
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5:1.9.22")
+    testImplementation("org.springframework.security:spring-security-test")
 
     // Lombok
     compileOnly("org.projectlombok:lombok:1.18.22")
+
+    // Security
+    implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.security:spring-security-oauth2-resource-server")
+    implementation("org.springframework.security:spring-security-oauth2-jose")
 }
 
 kapt {

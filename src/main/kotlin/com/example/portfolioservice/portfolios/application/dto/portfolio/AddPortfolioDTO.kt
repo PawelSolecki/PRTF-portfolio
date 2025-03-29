@@ -10,7 +10,7 @@ data class AddPortfolioDTO(
     fun toDomain(id: UUID): Portfolio {
         return Portfolio(
             name = name,
-            ownerId = id
+            ownerId = id,
         )
     }
 }

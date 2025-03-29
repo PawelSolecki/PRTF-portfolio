@@ -3,7 +3,7 @@ services:
     image: "postgres:16"
     container_name: portfolio-db
     ports:
-      - "5432:5432"
+      - "5433:5432"
     environment:
       POSTGRES_DB: portfolios
       POSTGRES_USER: ${POSTGRES_USER}

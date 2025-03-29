@@ -10,6 +10,7 @@ data class Portfolio(
     val ownerId: UUID? = null,
     val name: String = "",
     val assets: MutableList<Asset> = mutableListOf(),
+    val allocations: MutableList<PortfolioAllocation> = mutableListOf(),
     val createdAt: LocalDateTime? = null,
     val updatedAt: LocalDateTime? = null,
     val totalValue: BigDecimal = BigDecimal.ZERO
@@ -21,6 +22,7 @@ data class Portfolio(
             ownerId = ownerId,
             name = name,
             assets = assets.map { it.toEntity() }.toMutableList(),
+            allocations = allocations.map { it.toEntity() }.toMutableList(),
             createdAt = createdAt,
             updatedAt = updatedAt,
             totalValue = totalValue
