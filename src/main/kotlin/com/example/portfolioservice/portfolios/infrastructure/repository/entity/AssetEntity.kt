@@ -2,6 +2,7 @@ package com.example.portfolioservice.portfolios.infrastructure.repository.entity
 
 import com.example.portfolioservice.portfolios.domain.model.Asset
 import com.example.portfolioservice.portfolios.domain.model.AssetType
+import com.example.portfolioservice.portfolios.domain.model.Currency
 import jakarta.persistence.*
 import org.hibernate.annotations.UpdateTimestamp
 import java.math.BigDecimal
@@ -26,6 +27,12 @@ class AssetEntity @JvmOverloads constructor(
     @Column(nullable = false)
     val name: String = "",
 
+    @Column(nullable = false)
+    val broker: String = "",
+
+    @Column(nullable = false)
+    val currency: Currency = Currency.PLN,
+
     @Column(nullable = false, precision = 19, scale = 4)
     var totalQuantity: BigDecimal = BigDecimal.ZERO,
 
@@ -48,6 +55,7 @@ class AssetEntity @JvmOverloads constructor(
             portfolioId = portfolio?.id!!,
             type = type,
             name = name,
+            broker = broker,
             totalQuantity = totalQuantity,
             transactions = transactions.map { it.toDomain() }.toMutableList(),
             lastUpdated = lastUpdated,

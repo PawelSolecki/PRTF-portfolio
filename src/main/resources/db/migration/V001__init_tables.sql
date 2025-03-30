@@ -13,6 +13,8 @@ CREATE TABLE assets
     id             UUID PRIMARY KEY,
     portfolio_id   UUID           NOT NULL,
     name           VARCHAR(150)   NOT NULL,
+    broker         VARCHAR(50),
+    currency       VARCHAR(10)    NOT NULL,
     market         VARCHAR(50),
     ticker         VARCHAR(10),
     type           VARCHAR(20)    NOT NULL CHECK (type IN ('STOCK', 'BOND', 'COMMODITY', 'CRYPTO', 'ETF', 'MUTUAL_FUND')),
