@@ -19,6 +19,7 @@ CREATE TABLE assets
     ticker         VARCHAR(10),
     type           VARCHAR(20)    NOT NULL CHECK (type IN ('STOCK', 'BOND', 'COMMODITY', 'CRYPTO', 'ETF', 'MUTUAL_FUND')),
     total_quantity NUMERIC(19, 4) NOT NULL,
+    price_per_unit NUMERIC(19, 4) NOT NULL,
     last_updated   TIMESTAMP(6)   NOT NULL,
     CONSTRAINT fk_assets_portfolio FOREIGN KEY (portfolio_id) REFERENCES portfolios (id) ON DELETE CASCADE
 );

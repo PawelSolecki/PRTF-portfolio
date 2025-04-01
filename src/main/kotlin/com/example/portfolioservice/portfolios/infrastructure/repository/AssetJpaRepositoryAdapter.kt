@@ -1,7 +1,9 @@
 package com.example.portfolioservice.portfolios.infrastructure.repository
 
 import com.example.portfolioservice.portfolios.domain.model.Asset
+import com.example.portfolioservice.portfolios.domain.model.AssetType
 import com.example.portfolioservice.portfolios.domain.port.outgoing.AssetRepository
+import java.math.BigDecimal
 import java.util.*
 
 class AssetJpaRepositoryAdapter(
@@ -26,5 +28,9 @@ class AssetJpaRepositoryAdapter(
 
     override fun deleteAsset(id: UUID) {
         assetJpaRepository.deleteById(id)
+    }
+
+    override fun calculateAssetsValues(portfolioId: UUID): Map<AssetType, BigDecimal> {
+        return assetJpaRepository.calculateAssetsValues(portfolioId).mapKeys { AssetType.valueOf(it.key) }
     }
 }

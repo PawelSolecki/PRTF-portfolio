@@ -11,7 +11,7 @@ import java.util.*
 @Service
 class PortfolioServiceImpl(
     val portfolioRepository: PortfolioRepository,
-): PortfolioService {
+) : PortfolioService {
 
     override fun createPortfolio(portfolio: AddPortfolioDTO) {
         portfolioRepository.save(portfolio.toDomain(UUID.randomUUID()))
@@ -32,4 +32,5 @@ class PortfolioServiceImpl(
     override fun deletePortfolio(id: UUID) {
         portfolioRepository.delete(id)
     }
+
 }

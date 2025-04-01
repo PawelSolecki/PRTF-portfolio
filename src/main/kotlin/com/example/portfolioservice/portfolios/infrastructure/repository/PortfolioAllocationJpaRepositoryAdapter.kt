@@ -16,7 +16,7 @@ class PortfolioAllocationJpaRepositoryAdapter(
     }
 
     override fun getAllocationsByPortfolioId(portfolioId: UUID): PortfolioAllocation {
-        return allocationJpaRepository.findByPortfolioId(portfolioId).toDomain()
+        TODO("Not yet implemented")
     }
 
     override fun update(allocation: PortfolioAllocation) {

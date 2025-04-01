@@ -20,7 +20,7 @@ class AssetEntity @JvmOverloads constructor(
     @JoinColumn(name = "portfolio_id", nullable = false)
     var portfolio: PortfolioEntity? = null,
 
-    @Column(nullable = false)
+    @Column(name="type" ,nullable = false)
     @Enumerated(EnumType.STRING)
     val type: AssetType? = null,
 
@@ -35,6 +35,9 @@ class AssetEntity @JvmOverloads constructor(
 
     @Column(nullable = false, precision = 19, scale = 4)
     var totalQuantity: BigDecimal = BigDecimal.ZERO,
+
+    @Column(name = "price_per_unit", nullable = false, precision = 19, scale = 4)
+    var pricePerUnit: BigDecimal = BigDecimal.ZERO,
 
     @Column(nullable = false)
     @UpdateTimestamp
