@@ -31,6 +31,9 @@ class AssetJpaRepositoryAdapter(
     }
 
     override fun calculateAssetsValues(portfolioId: UUID): Map<AssetType, BigDecimal> {
-        return assetJpaRepository.calculateAssetsValues(portfolioId).mapKeys { AssetType.valueOf(it.key) }
+        return assetJpaRepository.calculateAssetsValues(portfolioId)
+            .associate {
+                AssetType.valueOf(it["key"] as String) to (it["value"] as BigDecimal)
+            }
     }
 }

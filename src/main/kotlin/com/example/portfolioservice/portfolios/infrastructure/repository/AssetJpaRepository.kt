@@ -10,13 +10,15 @@ interface AssetJpaRepository : JpaRepository<AssetEntity, UUID> {
     fun findByPortfolioId(portfolioId: UUID): List<AssetEntity>
 
     @Query(
-    """
-    SELECT a.type, SUM(a.price_per_unit * a.total_quantity) 
+        """
+    SELECT 
+        a.type AS key,
+        SUM(a.price_per_unit * a.total_quantity) AS value 
     FROM assets a 
     WHERE a.portfolio_id = :portfolioId 
     GROUP BY a.type
     """,
-    nativeQuery = true
+        nativeQuery = true
     )
-    fun calculateAssetsValues(portfolioId: UUID): Map<String, BigDecimal>
+    fun calculateAssetsValues(portfolioId: UUID): List<Map<String, BigDecimal>>
 }

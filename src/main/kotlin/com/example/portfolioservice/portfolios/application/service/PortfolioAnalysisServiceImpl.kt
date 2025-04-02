@@ -16,43 +16,48 @@ class PortfolioAnalysisServiceImpl(
 ) : PortfolioAnalysisService {
     override fun calculateRebalancing(portfolioId: UUID, additionalInvestment: BigDecimal): GetPortfolioRebalancing {
         val portfolio = portfolioRepository.getPortfolioById(portfolioId)
-        val newTotalValue = portfolio.totalValue.add(additionalInvestment)
+        val newTotalValue = portfolio.totalValue + additionalInvestment
         val currentAssetsValues = assetRepository.calculateAssetsValues(portfolioId)
+
         val categoryDeficit = portfolio.allocations
             .filter { it.assetType != null }
             .associate { allocation ->
                 val assetType = allocation.assetType!!
-                val targetValue = allocation.percentage.multiply(newTotalValue)
+                val targetValue = allocation.percentage.divide(BigDecimal(100)).multiply(newTotalValue)
                 val currentValue = currentAssetsValues[assetType] ?: BigDecimal.ZERO
+
                 val deficit = targetValue.subtract(currentValue).let {
                     if (it < BigDecimal.ZERO) BigDecimal.ZERO else it
                 }
+
                 assetType to deficit
             }
-        val totalDeficit = categoryDeficit.values.fold(BigDecimal.ZERO) { acc, value -> acc.add(value) }
+
+        val totalDeficit = categoryDeficit.values.sumOf { it.toDouble() }.toBigDecimal()
         val allocationMap = mutableMapOf<AssetType, BigDecimal>()
+
         if (totalDeficit <= additionalInvestment) {
             categoryDeficit.forEach { (type, deficit) ->
                 allocationMap[type] = deficit
             }
             val remaining = additionalInvestment.subtract(totalDeficit)
-            portfolio.allocations
-                .filter { it.assetType != null }
-                .forEach { allocation ->
+            if (remaining > BigDecimal.ZERO) {
+                portfolio.allocations.forEach { allocation ->
                     val add = remaining.multiply(allocation.percentage)
                     allocationMap.merge(allocation.assetType!!, add, BigDecimal::add)
                 }
+            }
         } else {
             categoryDeficit.forEach { (type, deficit) ->
                 val ratio = if (totalDeficit == BigDecimal.ZERO) BigDecimal.ZERO
                 else deficit.divide(totalDeficit, 10, BigDecimal.ROUND_HALF_EVEN)
+
                 allocationMap[type] = additionalInvestment.multiply(ratio)
                     .setScale(2, BigDecimal.ROUND_HALF_EVEN)
             }
         }
+
         return GetPortfolioRebalancing(allocationMap.filterValues { it > BigDecimal.ZERO })
-
     }
-
 
 }
