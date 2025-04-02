@@ -5,12 +5,14 @@ import com.example.portfolioservice.portfolios.application.dto.asset.PatchAssetD
 import com.example.portfolioservice.portfolios.domain.model.Asset
 import com.example.portfolioservice.portfolios.domain.port.incoming.AssetService
 import com.example.portfolioservice.portfolios.domain.port.outgoing.AssetRepository
+import com.example.portfolioservice.portfolios.infrastructure.utils.Utils
 import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
 class AssetServiceImpl(
-    val assetRepository: AssetRepository
+    val assetRepository: AssetRepository,
+    val utils: Utils
 ): AssetService {
     override fun createAsset(asset: AddAssetDTO) {
         assetRepository.save(asset.toDomain(UUID.randomUUID()))
@@ -24,8 +26,11 @@ class AssetServiceImpl(
         return assetRepository.getAssetsByPortfolioId(portfolioId)
     }
 
-    override fun updateAsset(asset: PatchAssetDTO) {
-        TODO("Not yet implemented")
+    override fun updateAsset(id: UUID, newAsset: PatchAssetDTO) {
+        val asset: Asset = assetRepository.getAssetById(id)
+        val editedAsset = utils.patch(asset, newAsset)
+
+        assetRepository.update(editedAsset)
     }
 
     override fun deleteAsset(id: UUID) {

@@ -30,9 +30,9 @@ class AssetController(
         return assetService.getAssetsByPortfolioId(portfolioId)
     }
 
-    @PatchMapping
-    fun updateAsset(@RequestBody asset: PatchAssetDTO) {
-        assetService.updateAsset(asset)
+    @PatchMapping("/{id}")
+    fun updateAsset(@RequestBody asset: PatchAssetDTO, @PathVariable id: UUID) {
+        assetService.updateAsset(id, asset)
     }
 
     @DeleteMapping("/{id}")

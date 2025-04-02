@@ -8,16 +8,16 @@ import java.util.*
 data class Asset(
     val id: UUID,
     val portfolioId: UUID?,
-    val type: AssetType?,
-    val name: String,
-    val broker: String,
-    val currency: Currency = Currency.PLN,
+    var type: AssetType?,
+    var name: String,
+    var broker: String,
+    var currency: Currency = Currency.PLN,
     val totalQuantity: BigDecimal = BigDecimal.ZERO,
-    val pricePerUnit: BigDecimal = BigDecimal.ZERO,
+    var pricePerUnit: BigDecimal = BigDecimal.ZERO,
     val transactions: MutableList<Transaction> = mutableListOf(),
     val lastUpdated: LocalDateTime? = null,
-    val market: String?,
-    val ticker: String?,
+    var market: String?,
+    var ticker: String?,
 ){
     fun toEntity(): AssetEntity {
         return AssetEntity(

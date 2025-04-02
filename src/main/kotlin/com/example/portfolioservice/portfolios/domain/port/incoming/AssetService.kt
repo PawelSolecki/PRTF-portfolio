@@ -3,7 +3,7 @@ package com.example.portfolioservice.portfolios.domain.port.incoming
 import com.example.portfolioservice.portfolios.application.dto.asset.AddAssetDTO
 import com.example.portfolioservice.portfolios.application.dto.asset.PatchAssetDTO
 import com.example.portfolioservice.portfolios.domain.model.Asset
-import java.util.UUID
+import java.util.*
 
 interface AssetService {
 
@@ -13,7 +13,7 @@ interface AssetService {
 
     fun getAssetsByPortfolioId(portfolioId: UUID): List<Asset>
 
-    fun updateAsset(asset: PatchAssetDTO)
+    fun updateAsset(id:UUID, asset: PatchAssetDTO)
 
     fun deleteAsset(id: UUID)
 
