@@ -6,6 +6,7 @@ import com.example.portfolioservice.portfolios.domain.model.Portfolio
 import com.example.portfolioservice.portfolios.domain.port.incoming.PortfolioService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import java.security.Principal
 import java.util.*
 
 @RestController
@@ -16,8 +17,8 @@ class PortfolioController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createPortfolio(@RequestBody portfolio: AddPortfolioDTO) {
-        portfolioService.createPortfolio(portfolio)
+    fun createPortfolio(@RequestBody portfolio: AddPortfolioDTO, principal: Principal) {
+        portfolioService.createPortfolio(UUID.fromString(principal.name), portfolio)
     }
 
     @GetMapping("/{id}")
@@ -25,9 +26,9 @@ class PortfolioController(
         return portfolioService.getPortfolioById(id)
     }
 
-    @GetMapping("/owner/{ownerId}")
-    fun getPortfoliosByOwnerId(@PathVariable ownerId: UUID): List<Portfolio> {
-        return portfolioService.getPortfoliosByOwnerId(ownerId)
+    @GetMapping("/owner")
+    fun getPortfoliosByOwnerId(principal: Principal): List<Portfolio> {
+        return portfolioService.getPortfoliosByOwnerId(UUID.fromString(principal.name))
     }
 
     @PatchMapping
@@ -40,7 +41,5 @@ class PortfolioController(
     fun deletePortfolio(@PathVariable id: UUID) {
         portfolioService.deletePortfolio(id)
     }
-
-
 
 }

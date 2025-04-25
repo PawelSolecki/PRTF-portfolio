@@ -22,11 +22,11 @@ class SecurityConfig {
                 authorize(anyRequest, permitAll)
 //                authorize(anyRequest, authenticated)
             }
-//            oauth2ResourceServer {
-//                jwt {
-//                    jwtAuthenticationConverter = jwtAuthenticationConverter()
-//                }
-//            }
+            oauth2ResourceServer {
+                jwt {
+                    jwtAuthenticationConverter = jwtAuthenticationConverter()
+                }
+            }
             cors { disable() }
             csrf { disable() }
             httpBasic { disable() }

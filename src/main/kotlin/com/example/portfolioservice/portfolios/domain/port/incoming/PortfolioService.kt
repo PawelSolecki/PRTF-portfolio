@@ -7,7 +7,7 @@ import java.util.*
 
 interface PortfolioService {
 
-    fun createPortfolio(portfolio: AddPortfolioDTO)
+    fun createPortfolio(userId: UUID, portfolio: AddPortfolioDTO)
 
     fun getPortfolioById(id: UUID): Portfolio
 

@@ -13,8 +13,8 @@ class PortfolioServiceImpl(
     val portfolioRepository: PortfolioRepository,
 ) : PortfolioService {
 
-    override fun createPortfolio(portfolio: AddPortfolioDTO) {
-        portfolioRepository.save(portfolio.toDomain(UUID.randomUUID()))
+    override fun createPortfolio(userId: UUID, portfolio: AddPortfolioDTO) {
+        portfolioRepository.save(portfolio.toDomain(userId))
     }
 
     override fun getPortfolioById(id: UUID): Portfolio {
