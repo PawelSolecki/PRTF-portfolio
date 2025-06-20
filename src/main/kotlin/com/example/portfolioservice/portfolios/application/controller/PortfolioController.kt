@@ -2,10 +2,12 @@ package com.example.portfolioservice.portfolios.application.controller
 
 import com.example.portfolioservice.portfolios.application.dto.portfolio.AddPortfolioDTO
 import com.example.portfolioservice.portfolios.application.dto.portfolio.PatchPortfolioDTO
+import com.example.portfolioservice.portfolios.domain.model.Currency
 import com.example.portfolioservice.portfolios.domain.model.Portfolio
 import com.example.portfolioservice.portfolios.domain.port.incoming.PortfolioService
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
+import java.math.BigDecimal
 import java.security.Principal
 import java.util.*
 
@@ -41,5 +43,11 @@ class PortfolioController(
     fun deletePortfolio(@PathVariable id: UUID) {
         portfolioService.deletePortfolio(id)
     }
+
+    @GetMapping("/{id}/total-value")
+    fun getPortfolioTotalValue(@PathVariable id: UUID, @RequestParam currency: Currency): BigDecimal {
+        return portfolioService.getPortfolioTotalValueInOneCurrency(id, currency)
+    }
+
 
 }

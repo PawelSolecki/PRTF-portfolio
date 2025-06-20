@@ -4,7 +4,6 @@ import com.example.portfolioservice.portfolios.domain.model.Portfolio
 import jakarta.persistence.*
 import org.hibernate.annotations.CreationTimestamp
 import org.hibernate.annotations.UpdateTimestamp
-import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
 
@@ -35,8 +34,9 @@ class PortfolioEntity @JvmOverloads constructor(
     @UpdateTimestamp
     var updatedAt: LocalDateTime? = LocalDateTime.now(),
 
-    @Column(nullable = false, precision = 19, scale = 4)
-    var totalValue: BigDecimal = BigDecimal.ZERO
+    @OneToMany(mappedBy = "portfolio", cascade = [CascadeType.ALL], orphanRemoval = true, fetch = FetchType.LAZY)
+    val totalValues: MutableList<PortfolioTotalValueEntity> = mutableListOf()
+
 ){
 
     fun toDomain(): Portfolio{
@@ -48,7 +48,7 @@ class PortfolioEntity @JvmOverloads constructor(
             allocations = allocations.map { it.toDomain() }.toMutableList(),
             createdAt = createdAt,
             updatedAt = updatedAt,
-            totalValue = totalValue
+            totalValue = totalValues.map { it.currency to it.value }.toMap()
         )
     }
 }

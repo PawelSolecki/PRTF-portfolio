@@ -16,7 +16,7 @@ class PortfolioAnalysisServiceImpl(
 ) : PortfolioAnalysisService {
     override fun calculateRebalancing(portfolioId: UUID, additionalInvestment: BigDecimal): GetPortfolioRebalancing {
         val portfolio = portfolioRepository.getPortfolioById(portfolioId)
-        val newTotalValue = portfolio.totalValue + additionalInvestment
+        val newTotalValue = portfolio.totalValue.values.sumOf { it } + additionalInvestment
         val currentAssetsValues = assetRepository.calculateAssetsValues(portfolioId)
 
         val categoryDeficit = portfolio.allocations

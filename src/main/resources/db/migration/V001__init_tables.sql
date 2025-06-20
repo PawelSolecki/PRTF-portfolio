@@ -3,7 +3,6 @@ CREATE TABLE portfolios
     id          UUID PRIMARY KEY,
     owner_id    UUID           NOT NULL,
     name        VARCHAR(150)   NOT NULL,
-    total_value NUMERIC(19, 4) NOT NULL,
     created_at  TIMESTAMP(6)   NOT NULL,
     updated_at  TIMESTAMP(6)   NOT NULL
 );
@@ -43,3 +42,12 @@ CREATE TABLE portfolio_allocations
     percentage    NUMERIC(19, 4) NOT NULL,
     CONSTRAINT fk_portfolio_allocations_portfolio FOREIGN KEY (portfolio_id) REFERENCES portfolios (id) ON DELETE CASCADE
 )
+;
+CREATE TABLE portfolio_total_values
+(
+    id          UUID PRIMARY KEY,
+    portfolio_id UUID NOT NULL,
+    currency    VARCHAR(10) NOT NULL,
+    value       NUMERIC(19, 4) NOT NULL,
+    CONSTRAINT fk_portfolio_total_values_portfolio FOREIGN KEY (portfolio_id) REFERENCES portfolios (id) ON DELETE CASCADE
+);
