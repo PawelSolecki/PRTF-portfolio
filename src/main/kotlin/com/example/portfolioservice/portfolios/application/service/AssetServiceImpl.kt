@@ -14,8 +14,8 @@ class AssetServiceImpl(
     val assetRepository: AssetRepository,
     val utils: Utils
 ): AssetService {
-    override fun createAsset(asset: AddAssetDTO) {
-        assetRepository.save(asset.toDomain(UUID.randomUUID()))
+    override fun createAsset(asset: AddAssetDTO) : Asset{
+         return assetRepository.save(asset.toDomain(UUID.randomUUID()))
     }
 
     override fun getAssetById(id: UUID): Asset {

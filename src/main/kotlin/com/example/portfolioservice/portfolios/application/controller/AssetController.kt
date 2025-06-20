@@ -4,6 +4,7 @@ import com.example.portfolioservice.portfolios.application.dto.asset.AddAssetDTO
 import com.example.portfolioservice.portfolios.application.dto.asset.PatchAssetDTO
 import com.example.portfolioservice.portfolios.domain.model.Asset
 import com.example.portfolioservice.portfolios.domain.port.incoming.AssetService
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus
 import org.springframework.web.bind.annotation.*
 import java.util.*
@@ -16,8 +17,10 @@ class AssetController(
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    fun createAsset(@RequestBody asset: AddAssetDTO) {
-        assetService.createAsset(asset)
+    fun createAsset(@RequestBody asset: AddAssetDTO, response: HttpServletResponse) {
+        val assetId = assetService.createAsset(asset).id
+        response.setHeader("Location", "/api/v1/asset/$assetId")
+
     }
 
     @GetMapping("/{id}")

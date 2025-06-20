@@ -6,7 +6,7 @@ import java.math.BigDecimal
 import java.util.*
 
 interface AssetRepository {
-    fun save(asset: Asset)
+    fun save(asset: Asset) : Asset
 
     fun getAssetById(id: UUID): Asset
 

@@ -39,6 +39,9 @@ class AssetEntity @JvmOverloads constructor(
     @Column(name = "price_per_unit", nullable = false, precision = 19, scale = 4)
     var pricePerUnit: BigDecimal = BigDecimal.ZERO,
 
+    @Column(name="total_cost", nullable = false, precision = 19, scale = 4)
+    var totalCost: BigDecimal = BigDecimal.ZERO,
+
     @Column(nullable = false)
     @UpdateTimestamp
     var lastUpdated: LocalDateTime? = LocalDateTime.now(),
@@ -66,6 +69,7 @@ class AssetEntity @JvmOverloads constructor(
             lastUpdated = lastUpdated,
             market = market,
             ticker = ticker,
+            totalCost = totalCost
         )
     }
 }

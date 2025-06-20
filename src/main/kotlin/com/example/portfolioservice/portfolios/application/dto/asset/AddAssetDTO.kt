@@ -3,6 +3,7 @@ package com.example.portfolioservice.portfolios.application.dto.asset
 import com.example.portfolioservice.portfolios.domain.model.Asset
 import com.example.portfolioservice.portfolios.domain.model.AssetType
 import com.example.portfolioservice.portfolios.domain.model.Currency
+import java.math.BigDecimal
 import java.util.*
 
 data class AddAssetDTO(
@@ -11,6 +12,7 @@ data class AddAssetDTO(
     val name: String,
     val broker: String,
     val currency: Currency,
+    val pricePerUnit: BigDecimal,
     val market: String?,
     val ticker: String?,
 
@@ -23,6 +25,7 @@ data class AddAssetDTO(
             name = name,
             broker = broker,
             currency = currency,
+            pricePerUnit = pricePerUnit,
             market = market,
             ticker = ticker
         )

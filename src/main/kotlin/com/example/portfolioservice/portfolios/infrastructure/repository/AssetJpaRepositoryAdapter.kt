@@ -9,8 +9,8 @@ import java.util.*
 class AssetJpaRepositoryAdapter(
     private val assetJpaRepository: AssetJpaRepository,
 ) : AssetRepository {
-    override fun save(asset: Asset) {
-        assetJpaRepository.save(asset.toEntity())
+    override fun save(asset: Asset) : Asset {
+        return assetJpaRepository.save(asset.toEntity()).toDomain()
     }
 
     override fun getAssetById(id: UUID): Asset {

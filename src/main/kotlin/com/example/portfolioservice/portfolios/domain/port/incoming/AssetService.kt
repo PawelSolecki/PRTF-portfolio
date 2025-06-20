@@ -7,7 +7,7 @@ import java.util.*
 
 interface AssetService {
 
-    fun createAsset(asset: AddAssetDTO)
+    fun createAsset(asset: AddAssetDTO) : Asset
 
     fun getAssetById(id: UUID): Asset
 

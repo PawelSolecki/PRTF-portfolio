@@ -14,6 +14,7 @@ data class Asset(
     var currency: Currency = Currency.PLN,
     val totalQuantity: BigDecimal = BigDecimal.ZERO,
     var pricePerUnit: BigDecimal = BigDecimal.ZERO,
+    var totalCost: BigDecimal = BigDecimal.ZERO,
     val transactions: MutableList<Transaction> = mutableListOf(),
     val lastUpdated: LocalDateTime? = null,
     var market: String?,
@@ -32,7 +33,8 @@ data class Asset(
             transactions = transactions.map { it.toEntity() }.toMutableList(),
             lastUpdated = lastUpdated,
             market = market,
-            ticker = ticker
+            ticker = ticker,
+            totalCost = totalCost
         )
     }
 }
