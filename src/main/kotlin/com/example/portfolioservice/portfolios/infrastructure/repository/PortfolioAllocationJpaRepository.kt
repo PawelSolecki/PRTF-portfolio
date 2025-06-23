@@ -6,4 +6,6 @@ import java.util.*
 
 interface PortfolioAllocationJpaRepository : JpaRepository<PortfolioAllocationEntity, UUID> {
     fun findByPortfolioId(portfolioId: UUID): PortfolioAllocationEntity
+
+    fun deleteByPortfolioId(portfolioId: UUID)
 }

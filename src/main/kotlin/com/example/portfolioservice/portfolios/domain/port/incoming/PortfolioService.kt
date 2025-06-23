@@ -1,6 +1,7 @@
 package com.example.portfolioservice.portfolios.domain.port.incoming
 
 import com.example.portfolioservice.portfolios.application.dto.portfolio.AddPortfolioDTO
+import com.example.portfolioservice.portfolios.application.dto.portfolio.GetPortfolioSummaryDTO
 import com.example.portfolioservice.portfolios.application.dto.portfolio.PatchPortfolioDTO
 import com.example.portfolioservice.portfolios.domain.model.Currency
 import com.example.portfolioservice.portfolios.domain.model.Portfolio
@@ -19,4 +20,7 @@ interface PortfolioService {
 
     fun deletePortfolio(id: UUID)
     fun getPortfolioTotalValueInOneCurrency(id: UUID, currency: Currency): BigDecimal
+    fun getSummary(id: UUID, currency: Currency): GetPortfolioSummaryDTO
+
+
 }

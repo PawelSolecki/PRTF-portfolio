@@ -1,6 +1,7 @@
 package com.example.portfolioservice.portfolios.application.controller
 
 import com.example.portfolioservice.portfolios.application.dto.portfolio.AddPortfolioDTO
+import com.example.portfolioservice.portfolios.application.dto.portfolio.GetPortfolioSummaryDTO
 import com.example.portfolioservice.portfolios.application.dto.portfolio.PatchPortfolioDTO
 import com.example.portfolioservice.portfolios.domain.model.Currency
 import com.example.portfolioservice.portfolios.domain.model.Portfolio
@@ -47,6 +48,11 @@ class PortfolioController(
     @GetMapping("/{id}/total-value")
     fun getPortfolioTotalValue(@PathVariable id: UUID, @RequestParam currency: Currency): BigDecimal {
         return portfolioService.getPortfolioTotalValueInOneCurrency(id, currency)
+    }
+
+    @GetMapping("/{id}/summary")
+    fun getPortfolioSummary(@PathVariable id: UUID, @RequestParam currency: Currency): GetPortfolioSummaryDTO{
+        return portfolioService.getSummary(id, currency)
     }
 
 

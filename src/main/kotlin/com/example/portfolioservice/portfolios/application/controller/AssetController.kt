@@ -3,6 +3,7 @@ package com.example.portfolioservice.portfolios.application.controller
 import com.example.portfolioservice.portfolios.application.dto.asset.AddAssetDTO
 import com.example.portfolioservice.portfolios.application.dto.asset.PatchAssetDTO
 import com.example.portfolioservice.portfolios.domain.model.Asset
+import com.example.portfolioservice.portfolios.domain.model.AssetType
 import com.example.portfolioservice.portfolios.domain.port.incoming.AssetService
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.HttpStatus
@@ -42,6 +43,11 @@ class AssetController(
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteAsset(@PathVariable id: UUID) {
         assetService.deleteAsset(id)
+    }
+
+    @GetMapping("types")
+    fun getAssetTypes():List<AssetType>{
+        return AssetType.entries
     }
 
 }

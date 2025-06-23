@@ -24,7 +24,7 @@ class PortfolioAllocationJpaRepositoryAdapter(
     }
 
     override fun deleteAllocation(id: UUID) {
-        allocationJpaRepository.deleteById(id)
+        allocationJpaRepository.deleteByPortfolioId(id)
     }
 
 }

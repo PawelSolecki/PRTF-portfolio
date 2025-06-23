@@ -5,6 +5,7 @@ import com.example.portfolioservice.portfolios.application.dto.allocation.PutPor
 import com.example.portfolioservice.portfolios.domain.model.PortfolioAllocation
 import com.example.portfolioservice.portfolios.domain.port.incoming.PortfolioAllocationService
 import com.example.portfolioservice.portfolios.domain.port.outgoing.PortfolioAllocationRepository
+import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -12,7 +13,9 @@ import java.util.*
 class PortfolioAllocationServiceImpl(
     val allocationRepository: PortfolioAllocationRepository
 ) : PortfolioAllocationService {
+    @Transactional
     override fun createAllocation(portfolioId: UUID, dto: AddPortfolioAllocationDTO) {
+        allocationRepository.deleteAllocation(portfolioId)
         dto.allocations.map {
             allocationRepository.save(it.toDomain(portfolioId))
         }

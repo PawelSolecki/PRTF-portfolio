@@ -1,6 +1,7 @@
 package com.example.portfolioservice.portfolios.application.service
 
 import com.example.portfolioservice.portfolios.application.dto.portfolio.AddPortfolioDTO
+import com.example.portfolioservice.portfolios.application.dto.portfolio.GetPortfolioSummaryDTO
 import com.example.portfolioservice.portfolios.application.dto.portfolio.PatchPortfolioDTO
 import com.example.portfolioservice.portfolios.domain.model.Currency
 import com.example.portfolioservice.portfolios.domain.model.Portfolio
@@ -45,6 +46,26 @@ class PortfolioServiceImpl(
             val rate = exchangeRates[portfolioCurrency.name.lowercase()] ?: BigDecimal.ZERO
             value / rate
         }
+    }
+
+    override fun getSummary(id: UUID, currency: Currency): GetPortfolioSummaryDTO {
+        val portfolio = portfolioRepository.getPortfolioById(id)
+        val exchangeRates = exchangeRateProvider.getExchangeRate(currency.name)
+
+        val totalValue : BigDecimal = portfolio.totalValue.entries.sumOf { (portfolioCurrency, value) ->
+            val rate = exchangeRates[portfolioCurrency.name.lowercase()] ?: BigDecimal.ONE
+            value / rate
+        }
+
+        val totalCost: BigDecimal = portfolio.assets.sumOf { asset ->
+            val rate = exchangeRates[asset.currency.name.lowercase()] ?: BigDecimal.ONE
+            asset.totalCost / rate
+        }
+
+        return GetPortfolioSummaryDTO(
+            totalValue = totalValue,
+            totalCost = totalCost,
+        )
     }
 
 }
