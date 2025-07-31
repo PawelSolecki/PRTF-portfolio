@@ -10,7 +10,8 @@ class TransactionJpaRepositoryAdapter(
     private val mapper: EntitiesMapper
 ) : TransactionRepository {
     override fun save(transaction: Transaction) {
-        transactionJpaRepository.save(transaction.toEntity())
+        val entity = transaction.toEntity()
+        transactionJpaRepository.save(entity)
     }
 
     override fun getTransactionById(id: UUID): Transaction {

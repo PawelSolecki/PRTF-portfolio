@@ -3,7 +3,6 @@ package com.example.portfolioservice.portfolios.infrastructure.repository.entity
 import com.example.portfolioservice.portfolios.domain.model.Transaction
 import com.example.portfolioservice.portfolios.domain.model.TransactionType
 import jakarta.persistence.*
-import org.hibernate.annotations.CreationTimestamp
 import java.math.BigDecimal
 import java.time.LocalDateTime
 import java.util.*
@@ -30,8 +29,7 @@ class TransactionEntity(
     val pricePerUnit: BigDecimal = BigDecimal.ZERO,
 
     @Column(nullable = false, updatable = false)
-    @CreationTimestamp
-    val date: LocalDateTime? = LocalDateTime.now()
+    val date: LocalDateTime = LocalDateTime.now()
 ) {
     fun toDomain(): Transaction {
         return Transaction(

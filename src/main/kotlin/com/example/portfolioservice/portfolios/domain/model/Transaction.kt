@@ -12,7 +12,7 @@ data class Transaction(
     val type: TransactionType?,
     val quantity: BigDecimal,
     val pricePerUnit: BigDecimal,
-    val date: LocalDateTime? = null
+    val date: LocalDateTime
 
 ){
     fun toEntity(): TransactionEntity {

@@ -11,7 +11,7 @@ data class AddTransactionDTO(
     val type: TransactionType,
     val quantity: BigDecimal,
     val pricePerUnit: BigDecimal,
-    val date: LocalDateTime? = LocalDateTime.now()
+    val date: LocalDateTime
 ){
     fun toDomain(): Transaction {
         return Transaction(
