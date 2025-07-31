@@ -3,6 +3,7 @@ package com.example.portfolioservice.portfolios.application.controller
 import com.example.portfolioservice.portfolios.application.dto.portfolio.AddPortfolioDTO
 import com.example.portfolioservice.portfolios.application.dto.portfolio.GetPortfolioSummaryDTO
 import com.example.portfolioservice.portfolios.application.dto.portfolio.PatchPortfolioDTO
+import com.example.portfolioservice.portfolios.application.service.security.PortfolioOwnerOnly
 import com.example.portfolioservice.portfolios.domain.model.Currency
 import com.example.portfolioservice.portfolios.domain.model.Portfolio
 import com.example.portfolioservice.portfolios.domain.port.incoming.PortfolioService
@@ -25,6 +26,7 @@ class PortfolioController(
     }
 
     @GetMapping("/{id}")
+    @PortfolioOwnerOnly
     fun getPortfolioById(@PathVariable id: UUID): Portfolio {
         return portfolioService.getPortfolioById(id)
     }
@@ -36,21 +38,25 @@ class PortfolioController(
 
     @PatchMapping
     fun updatePortfolio(@RequestBody portfolio: PatchPortfolioDTO) {
+        TODO("Implement update logic")
         portfolioService.updatePortfolio(portfolio)
     }
 
     @DeleteMapping("/{id}")
+    @PortfolioOwnerOnly
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deletePortfolio(@PathVariable id: UUID) {
         portfolioService.deletePortfolio(id)
     }
 
     @GetMapping("/{id}/total-value")
+    @PortfolioOwnerOnly
     fun getPortfolioTotalValue(@PathVariable id: UUID, @RequestParam currency: Currency): BigDecimal {
         return portfolioService.getPortfolioTotalValueInOneCurrency(id, currency)
     }
 
     @GetMapping("/{id}/summary")
+    @PortfolioOwnerOnly
     fun getPortfolioSummary(@PathVariable id: UUID, @RequestParam currency: Currency): GetPortfolioSummaryDTO{
         return portfolioService.getSummary(id, currency)
     }

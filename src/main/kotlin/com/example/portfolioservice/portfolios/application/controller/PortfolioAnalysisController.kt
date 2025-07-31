@@ -1,6 +1,7 @@
 package com.example.portfolioservice.portfolios.application.controller
 
 import com.example.portfolioservice.portfolios.application.dto.portfolio.GetPortfolioRebalancing
+import com.example.portfolioservice.portfolios.application.service.security.PortfolioOwnerOnly
 import com.example.portfolioservice.portfolios.domain.port.incoming.PortfolioAnalysisService
 import org.springframework.web.bind.annotation.*
 import java.math.BigDecimal
@@ -12,11 +13,12 @@ class PortfolioAnalysisController(
     val portfolioAnalysisService: PortfolioAnalysisService
 ) {
 
-    @GetMapping("/rebalance/{portfolioId}")
+    @GetMapping("/rebalance/{id}")
+    @PortfolioOwnerOnly
     fun rebalancePortfolio(
-        @PathVariable portfolioId: UUID,
+        @PathVariable id: UUID,
         @RequestParam additionalInvestment: BigDecimal
     ): GetPortfolioRebalancing {
-        return portfolioAnalysisService.calculateRebalancing(portfolioId, additionalInvestment)
+        return portfolioAnalysisService.calculateRebalancing(id, additionalInvestment)
     }
 }
