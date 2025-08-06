@@ -7,9 +7,9 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5433/portfolios
-    username: ${POSTGRES_USER}
-    password: ${POSTGRES_PASSWORD}
+    url: jdbc:postgresql://portfolio-db:5432/portfolios
+    username: ${db.user}
+    password: ${db.password}
 
   jpa:
     hibernate:
@@ -29,3 +29,7 @@ management:
     web:
       exposure:
         include: "*"
+
+db:
+  user: ${DB_USER}
+  password: ${DB_PASSWORD}
