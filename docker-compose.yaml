@@ -8,10 +8,15 @@ services:
     environment:
       - DB_USER=${DB_USER}
       - DB_PASSWORD=${DB_PASSWORD}
+      - DB_HOST=portfolio-db:5432
+      - SECURITY_HOST=keycloak:8080
     ports:
-      - "8082:8080"
+      - ":8082"
     depends_on:
       - portfolio-db
+    networks:
+      - PRTF-network
+      - portfolio-network
 
 
   portfolio-db:
@@ -25,7 +30,16 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
       - db-portfolios-data:/var/lib/postgresql/data
+    networks:
+      - portfolio-network
 
 volumes:
   db-portfolios-data:
     driver: local
+
+networks:
+  portfolio-network:
+    driver: bridge
+  PRTF-network:
+    driver: bridge
+    external: true

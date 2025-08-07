@@ -1,5 +1,6 @@
 package com.example.portfolioservice.portfolios.infrastructure.security
 
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity
@@ -15,6 +16,9 @@ import org.springframework.security.web.SecurityFilterChain
 @EnableWebSecurity
 @EnableMethodSecurity(prePostEnabled = true)
 class SecurityConfig {
+
+    @Value("\${security.host}")
+    private lateinit var securityHost: String
 
     @Bean
     fun securityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -38,7 +42,7 @@ class SecurityConfig {
 
     @Bean
     fun jwtDecoder(): JwtDecoder {
-        return JwtDecoders.fromOidcIssuerLocation("http://localhost:8080/realms/portfolios")
+        return JwtDecoders.fromOidcIssuerLocation("http://$securityHost/realms/portfolios")
     }
 
     @Bean

@@ -7,7 +7,7 @@ spring:
 
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://portfolio-db:5432/portfolios
+    url: jdbc:postgresql://${db.host}/portfolios
     username: ${db.user}
     password: ${db.password}
 
@@ -23,7 +23,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: localhost:8080/realms/portfolios/protocol/openid-connect/certs
+          jwk-set-uri: ${security.host}/realms/portfolios/protocol/openid-connect/certs
 management:
   endpoints:
     web:
@@ -33,3 +33,7 @@ management:
 db:
   user: ${DB_USER}
   password: ${DB_PASSWORD}
+  host: localhost:5432
+
+security:
+  host: keycloak:8080
