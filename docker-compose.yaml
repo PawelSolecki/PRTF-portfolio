@@ -10,6 +10,7 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_HOST=portfolio-db:5432
       - SECURITY_HOST=keycloak:8080
+      - MOCK_DATA_ENABLED=true
     ports:
       - ":8082"
     depends_on:
@@ -26,8 +27,8 @@ services:
       - "5433:5432"
     environment:
       POSTGRES_DB: portfolios
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
       - db-portfolios-data:/var/lib/postgresql/data
     networks:

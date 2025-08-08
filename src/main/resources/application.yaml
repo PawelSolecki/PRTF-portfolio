@@ -10,6 +10,8 @@ spring:
     url: jdbc:postgresql://${db.host}/portfolios
     username: ${db.user}
     password: ${db.password}
+    hikari:
+      connection-init-sql: SET app.mock_data TO '${MOCK_DATA_ENABLED:false}'
 
   jpa:
     hibernate:

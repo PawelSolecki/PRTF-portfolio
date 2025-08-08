@@ -45,7 +45,7 @@ class AssetController(
         assetService.deleteAsset(id)
     }
 
-    @GetMapping("types")
+    @GetMapping("/types")
     fun getAssetTypes():List<AssetType>{
         return AssetType.entries
     }
