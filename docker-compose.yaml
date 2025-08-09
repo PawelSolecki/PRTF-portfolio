@@ -10,9 +10,8 @@ services:
       - DB_PASSWORD=${DB_PASSWORD}
       - DB_HOST=portfolio-db:5432
       - SECURITY_HOST=keycloak:8080
-      - MOCK_DATA_ENABLED=true
     ports:
-      - ":8082"
+      - "8082:8082"
     depends_on:
       - portfolio-db
     networks:
@@ -29,6 +28,7 @@ services:
       POSTGRES_DB: portfolios
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
+    command: ["postgres", "-c", "app.mock_data=true"]
     volumes:
       - db-portfolios-data:/var/lib/postgresql/data
     networks:
